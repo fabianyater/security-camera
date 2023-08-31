@@ -1,0 +1,34 @@
+.captureContainer {
+  text-align: center;
+  color: #fff;
+}
+
+.captureGrid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  padding: 20px;
+  list-style: none;
+}
+
+.captureList {
+  position: relative;
+  width: 100%;
+}
+
+.captureList img {
+  width: 100%;
+  height: auto;
+  border: 1px solid #5c5c5c;
+}
+
+.captureList button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 2px 6px;
+  cursor: pointer;
+}
