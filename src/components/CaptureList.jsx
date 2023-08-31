@@ -3,9 +3,9 @@ import styles from "./CaptureList.module.css"; // Importa tus estilos aquí
 
 function CaptureList({ title, capturedImages, onDeleteImage }) {
   return (
-    capturedImages && (
-      <div className={styles.captureContainer}>
-        <h2 className={styles.title}>{title}</h2>
+    <div className={styles.captureContainer}>
+      <h2 className={styles.title}>{title}</h2>
+      {capturedImages?.length > 0 ? (
         <ul className={styles.captureGrid}>
           {capturedImages.map((image, index) => (
             <li className={styles.captureList} key={index}>
@@ -14,8 +14,10 @@ function CaptureList({ title, capturedImages, onDeleteImage }) {
             </li>
           ))}
         </ul>
-      </div>
-    )
+      ) : (
+        <p className={styles.noDataMessage}>No captures yet.</p>
+      )}
+    </div>
   );
 }
 

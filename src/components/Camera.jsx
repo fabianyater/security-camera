@@ -3,6 +3,8 @@ import styles from "./Camera.module.css";
 import CaptureList from "./CaptureList";
 import { useCaptureImage } from "../hooks/useCaptureImage";
 import { startCameraStream, stopCameraStream } from "../utils/cameraUtils";
+import VideoList from "./VideoList";
+import Tabs from "./Tabs";
 
 function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -17,12 +19,12 @@ function Camera() {
       stopAutomaticCapture();
     } else {
       startCameraStream(videoRef);
-      startAutomaticCapture();
+       startAutomaticCapture();
     }
 
     setIsCameraOn((prevState) => !prevState);
     localStorage.setItem("cameraState", isCameraOn ? "off" : "on");
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCameraOn]);
 
   const handleCapture = () => {
@@ -55,6 +57,29 @@ function Camera() {
     setCaptureInterval(null); // Limpiar el intervalo al detener la captura automática
   };
 
+  const tabs = [
+    {
+      id: "captures",
+      label: "Captures",
+      content: (
+        <CaptureList
+          title="Captures"
+          capturedImages={capturedImages}
+          onDeleteImage={handleDeleteImage}
+        />
+      ),
+    },
+    {
+      id: "videos",
+      label: "Videos",
+      content: (
+        <VideoList
+        // ... (props para el componente VideoList)
+        />
+      ),
+    },
+  ];
+
   useEffect(() => {
     const storedCameraState = localStorage.getItem("cameraState");
 
@@ -67,12 +92,12 @@ function Camera() {
       startAutomaticCapture();
     }
 
-    console.log({capturedImages});
+    console.log({ capturedImages });
 
     return () => {
       stopAutomaticCapture(); // Detener el intervalo al desmontar el componente
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -88,12 +113,8 @@ function Camera() {
           Capture
         </button>
       </div>
-      <div className={styles.capture}>
-        <CaptureList
-          title="Captures"
-          capturedImages={capturedImages}
-          onDeleteImage={handleDeleteImage}
-        />
+      <div className={styles.tabs}>
+        <Tabs tabs={tabs} />
       </div>
     </div>
   );

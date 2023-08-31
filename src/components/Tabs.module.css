@@ -1,0 +1,10 @@
+/* Tabs.module.css */
+
+.tab_buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}

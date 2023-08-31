@@ -32,3 +32,9 @@
   padding: 2px 6px;
   cursor: pointer;
 }
+
+.noDataMessage {
+  margin-top: 1rem;
+  text-align: center;
+  color: #888;
+}
