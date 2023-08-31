@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 function VideoList() {
-  const [videos, setVideos] = useState([]);
 
   useEffect(() => {
     // Lógica para cargar los videos grabados

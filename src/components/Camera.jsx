@@ -22,7 +22,8 @@ function Camera() {
 
     setIsCameraOn((prevState) => !prevState);
     localStorage.setItem("cameraState", isCameraOn ? "off" : "on");
-  }, []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isCameraOn]);
 
   const handleCapture = () => {
     const newImage = captureImage();
@@ -71,6 +72,7 @@ function Camera() {
     return () => {
       stopAutomaticCapture(); // Detener el intervalo al desmontar el componente
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
