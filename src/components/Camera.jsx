@@ -22,7 +22,7 @@ function Camera() {
 
     setIsCameraOn((prevState) => !prevState);
     localStorage.setItem("cameraState", isCameraOn ? "off" : "on");
-  }, [isCameraOn]);
+  }, []);
 
   const handleCapture = () => {
     const newImage = captureImage();
