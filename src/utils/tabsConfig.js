@@ -2,7 +2,7 @@ import React from "react";
 import CaptureList from "../components/CaptureList";
 import VideoList from "../components/VideoList";
 
-const createTabsConfig = ({ capturedImages, handleDeleteImage }) => [
+const createTabsConfig = ({ capturedImages, capturedVideos, handleDeleteImage }) => [
   {
     id: "captures",
     label: "Captures",
@@ -19,7 +19,8 @@ const createTabsConfig = ({ capturedImages, handleDeleteImage }) => [
     label: "Videos",
     content: (
       <VideoList
-        // ... (props para el componente VideoList)
+        title="Videos"
+        capturedVideos={capturedVideos}
       />
     ),
   },

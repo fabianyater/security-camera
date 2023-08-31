@@ -13,7 +13,11 @@ import createTabsConfig from "../utils/tabsConfig";
 function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [capturedImages, setCapturedImages] = useState([]);
-  const [captureInterval, setCaptureInterval] = useState(null);
+  const [videoList, setVideoList] = useState([]);
+  const [captureInterval] = useState(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingStartTime, setRecordingStartTime] = useState(null);
+  const [videoChunks, setVideoChunks] = useState([]);
   const videoRef = useRef(null);
   const { captureImage } = useCaptureImage(videoRef);
 
@@ -28,7 +32,6 @@ function Camera() {
 
     setIsCameraOn((prevState) => !prevState);
     localStorage.setItem("cameraState", isCameraOn ? "off" : "on");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCameraOn]);
 
   const handleCapture = () => {
@@ -45,10 +48,69 @@ function Camera() {
     setCapturedImages(newCapturedImages);
   };
 
-  const tabs = createTabsConfig({
-    capturedImages,
-    handleDeleteImage,
-  });
+  const startRecording = useCallback(() => {
+    if (isCameraOn && !isRecording) {
+      // Initialize video chunks
+      setVideoChunks([]);
+
+      // Access the current video stream
+      const stream = videoRef.current.srcObject;
+      if (!stream) {
+        console.error("Stream not available");
+        return;
+      }
+
+      try {
+        // Create a new Media Recorder
+        const newMediaRecorder = new MediaRecorder(stream);
+
+        // Current recording start time
+        const currentRecordingStartTime = Date.now();
+
+        // On data available
+        newMediaRecorder.ondataavailable = (event) => {
+          if (event.data.size > 0) {
+            setVideoChunks((prevChunks) => [...prevChunks, event.data]);
+          }
+        };
+
+        // On stop
+        newMediaRecorder.onstop = () => {
+          setVideoChunks((chunks) => {
+            const blob = new Blob(chunks, { type: "video/webm" });
+            const videoUrl = URL.createObjectURL(blob);
+  
+            setVideoList((prevList) => [
+              ...prevList,
+              {
+                videoUrl,
+                videoStartTime: currentRecordingStartTime,
+              },
+            ]);
+            return [];
+          });
+        };
+
+        newMediaRecorder.onerror = (e) => {
+          console.error("MediaRecorder error", e);
+        };
+
+        // Start recording
+        newMediaRecorder.start();
+        setIsRecording(true);
+        setRecordingStartTime(Date.now());
+
+        // Stop recording after 30 seconds
+        setTimeout(() => {
+          newMediaRecorder.stop();
+          setIsRecording(false);
+          startRecording();
+        }, 30000);
+      } catch (e) {
+        console.error("Failed to start recording");
+      }
+    }
+  }, [isCameraOn, isRecording]);
 
   useEffect(() => {
     const storedCameraState = localStorage.getItem("cameraState");
@@ -58,17 +120,30 @@ function Camera() {
       stopAutomaticCapture();
       setIsCameraOn(false);
     } else {
-      startCameraStream(videoRef);
-      startAutomaticCapture(captureInterval, isCameraOn, handleCapture);
+      startCameraStream(videoRef)
+        .then(() => {
+          startAutomaticCapture(captureInterval, isCameraOn, handleCapture);
+          startRecording();
+        })
+        .catch((error) => {
+          console.error("Could not start camera: ", error);
+        });
     }
 
-    console.log({ capturedImages });
-
     return () => {
-      stopAutomaticCapture(); // Detener el intervalo al desmontar el componente
+      stopAutomaticCapture();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    console.log(videoList);
+  }, [videoList]);
+
+  const tabs = createTabsConfig({
+    capturedImages,
+    capturedVideos: videoList,
+    handleDeleteImage,
+  });
 
   return (
     <div className={styles.camera}>
