@@ -21,3 +21,18 @@ export const stopCameraStream = (videoRef) => {
 
   videoRef.current.srcObject = null;
 };
+
+export const startAutomaticCapture = (interval, isCameraOn, handleCapture) => {
+  if (interval === null) {
+    const newInterval = setInterval(() => {
+      if (isCameraOn) {
+        handleCapture();
+      }
+    }, 5000);
+    return newInterval;
+  }
+};
+
+export const stopAutomaticCapture = (interval) => {
+  clearInterval(interval);
+};

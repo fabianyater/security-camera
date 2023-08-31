@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import styles from "./Camera.module.css";
-import CaptureList from "./CaptureList";
 import { useCaptureImage } from "../hooks/useCaptureImage";
-import { startCameraStream, stopCameraStream } from "../utils/cameraUtils";
-import VideoList from "./VideoList";
+import {
+  startAutomaticCapture,
+  startCameraStream,
+  stopAutomaticCapture,
+  stopCameraStream,
+} from "../utils/cameraUtils";
 import Tabs from "./Tabs";
+import createTabsConfig from "../utils/tabsConfig";
 
 function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -16,10 +20,10 @@ function Camera() {
   const toggleCamera = useCallback(() => {
     if (isCameraOn) {
       stopCameraStream(videoRef);
-      stopAutomaticCapture();
+      stopAutomaticCapture(captureInterval);
     } else {
       startCameraStream(videoRef);
-       startAutomaticCapture();
+      startAutomaticCapture(captureInterval, isCameraOn, handleCapture);
     }
 
     setIsCameraOn((prevState) => !prevState);
@@ -41,44 +45,10 @@ function Camera() {
     setCapturedImages(newCapturedImages);
   };
 
-  const startAutomaticCapture = () => {
-    if (captureInterval === null) {
-      const interval = setInterval(function () {
-        if (isCameraOn) {
-          handleCapture();
-        }
-      }, 5000);
-      setCaptureInterval(interval);
-    }
-  };
-
-  const stopAutomaticCapture = () => {
-    clearInterval(captureInterval);
-    setCaptureInterval(null); // Limpiar el intervalo al detener la captura automática
-  };
-
-  const tabs = [
-    {
-      id: "captures",
-      label: "Captures",
-      content: (
-        <CaptureList
-          title="Captures"
-          capturedImages={capturedImages}
-          onDeleteImage={handleDeleteImage}
-        />
-      ),
-    },
-    {
-      id: "videos",
-      label: "Videos",
-      content: (
-        <VideoList
-        // ... (props para el componente VideoList)
-        />
-      ),
-    },
-  ];
+  const tabs = createTabsConfig({
+    capturedImages,
+    handleDeleteImage,
+  });
 
   useEffect(() => {
     const storedCameraState = localStorage.getItem("cameraState");
@@ -89,7 +59,7 @@ function Camera() {
       setIsCameraOn(false);
     } else {
       startCameraStream(videoRef);
-      startAutomaticCapture();
+      startAutomaticCapture(captureInterval, isCameraOn, handleCapture);
     }
 
     console.log({ capturedImages });

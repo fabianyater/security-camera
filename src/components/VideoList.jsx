@@ -1,19 +1,7 @@
-import React, { useEffect } from 'react';
+import React from "react";
 
-function VideoList() {
-
-  useEffect(() => {
-    // Lógica para cargar los videos grabados
-  }, []);
-
-  return (
-    <div className="video-list">
-      <h2>Recorded Videos</h2>
-      <ul>
-        {/* Mapear y mostrar los videos aquí */}
-      </ul>
-    </div>
-  );
+function CaptureList({ title, capturedVideos }) {
+  return <h1>Videos</h1>;
 }
 
-export default VideoList;
+export default CaptureList;
