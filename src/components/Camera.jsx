@@ -16,7 +16,9 @@ function Camera() {
   const [videoList, setVideoList] = useState([]);
   const [captureInterval] = useState(null);
   const [isRecording, setIsRecording] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [recordingStartTime, setRecordingStartTime] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [videoChunks, setVideoChunks] = useState([]);
   const videoRef = useRef(null);
   const { captureImage } = useCaptureImage(videoRef);
@@ -32,6 +34,7 @@ function Camera() {
 
     setIsCameraOn((prevState) => !prevState);
     localStorage.setItem("cameraState", isCameraOn ? "off" : "on");
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCameraOn]);
 
   const handleCapture = () => {
@@ -133,6 +136,7 @@ function Camera() {
     return () => {
       stopAutomaticCapture();
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
