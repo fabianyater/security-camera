@@ -11,6 +11,7 @@ import {
 import Tabs from "./Tabs";
 import createTabsConfig from "../utils/tabsConfig";
 import { useRecording } from "../hooks/useRecording";
+import CameraControls from "./CameraControls";
 
 function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -79,15 +80,11 @@ function Camera() {
     <div className={styles.camera}>
       <div className={styles.videoWrapper}>
         <video ref={videoRef} autoPlay muted />
-      </div>
-      {/* TODO: CameraControls */}
-      <div>
-        <button className={styles.toggleButton} onClick={toggleCamera}>
-          {isCameraOn ? "Turn Off Camera" : "Turn On Camera"}
-        </button>
-        <button className={styles.toggleButton} onClick={captureUtility}>
-          Capture
-        </button>
+        <CameraControls
+          isCameraOn={isCameraOn}
+          toggleCamera={toggleCamera}
+          captureUtility={captureUtility}
+        />
       </div>
       <div className={styles.tabs}>
         <Tabs tabs={tabs} />
