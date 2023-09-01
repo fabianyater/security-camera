@@ -20,9 +20,12 @@ function Camera() {
   const videoRef = useRef(null);
   const { startRecording, videoList } = useRecording(isCameraOn, videoRef);
   const { captureImage } = useCaptureImage(videoRef);
-  const captureUtility = () => handleCapture(captureImage, setCapturedImages);
   const deleteImage = (index) =>
     handleDeleteImage(index, capturedImages, setCapturedImages);
+  const captureUtility = useCallback(
+    () => handleCapture(captureImage, setCapturedImages),
+    [captureImage]
+  );
 
   const toggleCamera = useCallback(() => {
     if (isCameraOn) {
