@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 export function useRecording(isCameraOn, videoRef) {
   const [isRecording, setIsRecording] = useState(false);
@@ -7,6 +7,7 @@ export function useRecording(isCameraOn, videoRef) {
   const [videoList, setVideoList] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [recordingStartTime, setRecordingStartTime] = useState(null);
+  const RECORDING_TIME = 10000;
 
   const startRecording = useCallback(() => {
     if (!videoRef.current) {
@@ -53,23 +54,27 @@ export function useRecording(isCameraOn, videoRef) {
           console.error("MediaRecorder error", e);
         };
 
-        // Start recording
         newMediaRecorder.start();
         setIsRecording(true);
         setRecordingStartTime(Date.now());
 
-        // Stop recording after 30 seconds
         setTimeout(() => {
           newMediaRecorder.stop();
           setIsRecording(false);
           startRecording();
-        }, 30000);
+        }, RECORDING_TIME);
       } catch (e) {
         console.error("Failed to start recording", e);
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCameraOn, videoRef]);
+
+  useEffect(() => {
+    if (isCameraOn) {
+      startRecording();
+    }
+  }, [isCameraOn, startRecording]);
 
   return { startRecording, isRecording, videoList };
 }

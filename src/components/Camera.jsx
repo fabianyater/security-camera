@@ -28,15 +28,19 @@ function Camera() {
     if (isCameraOn) {
       stopCameraStream(videoRef);
       stopAutomaticCapture(captureInterval);
+      setIsCameraOn(false);
+      localStorage.setItem("cameraState", "off");
     } else {
-      startCameraStream(videoRef);
-      startAutomaticCapture(captureInterval, isCameraOn, handleCapture);
+      startCameraStream(videoRef)
+        .then(() => {
+          startAutomaticCapture(captureInterval, captureUtility);
+          startRecording();
+          setIsCameraOn(true);
+          localStorage.setItem("cameraState", "on");
+        })
+        .catch((error) => console.log("Error: ", error));
     }
-
-    setIsCameraOn((prevState) => !prevState);
-    localStorage.setItem("cameraState", isCameraOn ? "off" : "on");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isCameraOn]);
+  }, [captureInterval, captureUtility, isCameraOn, startRecording]);
 
   useEffect(() => {
     const storedCameraState = localStorage.getItem("cameraState");
@@ -48,12 +52,13 @@ function Camera() {
     } else {
       startCameraStream(videoRef)
         .then(() => {
-          startAutomaticCapture(captureInterval, isCameraOn, captureUtility);
+          startAutomaticCapture(captureInterval, captureUtility);
           startRecording();
         })
         .catch((error) => {
           console.error("Could not start camera: ", error);
         });
+      setIsCameraOn(true);
     }
 
     return () => {
