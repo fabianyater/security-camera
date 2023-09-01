@@ -1,0 +1,18 @@
+.controlsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controlsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  background-color: rgba(116, 116, 116, 0.767);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 0 auto; 
+  margin-bottom: 5px;
+}
