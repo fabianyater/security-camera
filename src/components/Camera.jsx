@@ -6,7 +6,9 @@ import {
   startCameraStream,
   stopAutomaticCapture,
   stopCameraStream,
-} from "../utils/cameraUtils";
+  handleCapture,
+  handleDeleteImage,
+} from "../utils/cameraActions";
 import Tabs from "./Tabs";
 import createTabsConfig from "../utils/tabsConfig";
 import { useRecording } from "../hooks/useRecording";
@@ -16,11 +18,11 @@ function Camera() {
   const [capturedImages, setCapturedImages] = useState([]);
   const [captureInterval] = useState(null);
   const videoRef = useRef(null);
-  const { startRecording, videoList } = useRecording(
-    isCameraOn,
-    videoRef
-  );
+  const { startRecording, videoList } = useRecording(isCameraOn, videoRef);
   const { captureImage } = useCaptureImage(videoRef);
+  const captureUtility = () => handleCapture(captureImage, setCapturedImages);
+  const deleteImage = (index) =>
+    handleDeleteImage(index, capturedImages, setCapturedImages);
 
   const toggleCamera = useCallback(() => {
     if (isCameraOn) {
@@ -36,20 +38,6 @@ function Camera() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCameraOn]);
 
-  const handleCapture = () => {
-    const newImage = captureImage();
-
-    if (newImage) {
-      setCapturedImages((prevImages) => [...prevImages, newImage]);
-    }
-  };
-
-  const handleDeleteImage = (index) => {
-    const newCapturedImages = [...capturedImages];
-    newCapturedImages.splice(index, 1);
-    setCapturedImages(newCapturedImages);
-  };
-
   useEffect(() => {
     const storedCameraState = localStorage.getItem("cameraState");
 
@@ -60,7 +48,7 @@ function Camera() {
     } else {
       startCameraStream(videoRef)
         .then(() => {
-          startAutomaticCapture(captureInterval, isCameraOn, handleCapture);
+          startAutomaticCapture(captureInterval, isCameraOn, captureUtility);
           startRecording();
         })
         .catch((error) => {
@@ -73,11 +61,11 @@ function Camera() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  
+
   const tabs = createTabsConfig({
     capturedImages,
     capturedVideos: videoList,
-    handleDeleteImage,
+    handleDeleteImage: deleteImage,
   });
 
   return (
@@ -85,11 +73,12 @@ function Camera() {
       <div className={styles.videoWrapper}>
         <video ref={videoRef} autoPlay muted />
       </div>
+      {/* TODO: CameraControls */}
       <div>
         <button className={styles.toggleButton} onClick={toggleCamera}>
           {isCameraOn ? "Turn Off Camera" : "Turn On Camera"}
         </button>
-        <button className={styles.toggleButton} onClick={handleCapture}>
+        <button className={styles.toggleButton} onClick={captureUtility}>
           Capture
         </button>
       </div>
