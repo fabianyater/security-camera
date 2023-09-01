@@ -16,7 +16,7 @@ function Camera() {
   const [capturedImages, setCapturedImages] = useState([]);
   const [captureInterval] = useState(null);
   const videoRef = useRef(null);
-  const { startRecording, isRecording, videoList } = useRecording(
+  const { startRecording, videoList } = useRecording(
     isCameraOn,
     videoRef
   );

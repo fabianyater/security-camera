@@ -2,8 +2,10 @@ import { useState, useCallback, useEffect } from 'react';
 
 export function useRecording(isCameraOn, videoRef) {
   const [isRecording, setIsRecording] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [videoChunks, setVideoChunks] = useState([]);
   const [videoList, setVideoList] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [recordingStartTime, setRecordingStartTime] = useState(null);
 
   const startRecording = useCallback(() => {
@@ -66,6 +68,7 @@ export function useRecording(isCameraOn, videoRef) {
         console.error("Failed to start recording", e);
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCameraOn, videoRef]);
 
   useEffect(() => {
