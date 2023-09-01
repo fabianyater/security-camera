@@ -73,11 +73,7 @@ function Camera() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    console.log(videoList);
-  }, [videoList]);
-
+  
   const tabs = createTabsConfig({
     capturedImages,
     capturedVideos: videoList,

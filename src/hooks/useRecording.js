@@ -71,9 +71,5 @@ export function useRecording(isCameraOn, videoRef) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCameraOn, videoRef]);
 
-  useEffect(() => {
-    console.log("Video list updated:", videoList);
-  }, [videoList]);
-
   return { startRecording, isRecording, videoList };
 }
