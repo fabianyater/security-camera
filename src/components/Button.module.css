@@ -1,0 +1,25 @@
+button {
+  background: rgba(170, 170, 170, 0.062);
+  border: none;
+  padding: 10px 15px;
+  border-radius: 10px;
+  transition: 0.2s;
+  cursor: pointer;
+  position: relative;
+}
+
+button:hover {
+  background: rgba(204, 203, 203, 0.308);
+  color: #fff;
+}
+
+button:active {
+  background: rgba(204, 203, 203, 0.5);
+  top: 2px;
+  left: 2px;
+}
+
+button img {
+  width: 24px;
+  height: 24px;
+}
