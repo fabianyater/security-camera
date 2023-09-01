@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import styles from "./Camera.module.css";
 import { useCaptureImage } from "../hooks/useCaptureImage";
 import {
-  startAutomaticCapture,
   startCameraStream,
   stopAutomaticCapture,
   stopCameraStream,
@@ -36,14 +35,14 @@ function Camera() {
     } else {
       startCameraStream(videoRef)
         .then(() => {
-          startAutomaticCapture(captureInterval, captureUtility);
+          /* startAutomaticCapture(captureInterval, captureUtility); */
           startRecording();
           setIsCameraOn(true);
           localStorage.setItem("cameraState", "on");
         })
         .catch((error) => console.log("Error: ", error));
     }
-  }, [captureInterval, captureUtility, isCameraOn, startRecording]);
+  }, [captureInterval, isCameraOn, startRecording]);
 
   useEffect(() => {
     const storedCameraState = localStorage.getItem("cameraState");
@@ -55,7 +54,7 @@ function Camera() {
     } else {
       startCameraStream(videoRef)
         .then(() => {
-          startAutomaticCapture(captureInterval, captureUtility);
+          /* startAutomaticCapture(captureInterval, captureUtility); */
           startRecording();
         })
         .catch((error) => {

@@ -7,7 +7,7 @@ export function useRecording(isCameraOn, videoRef) {
   const [videoList, setVideoList] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [recordingStartTime, setRecordingStartTime] = useState(null);
-  const RECORDING_TIME = 10000;
+  const RECORDING_TIME = 600000;
 
   const startRecording = useCallback(() => {
     if (!videoRef.current) {
