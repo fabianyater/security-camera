@@ -66,3 +66,15 @@ export const unmuteMicrophone = (videoRef) => {
     });
   }
 };
+
+export const muteVideoVolume = (videoRef) => {
+  if (videoRef.current) {
+    videoRef.current.muted = true;
+  }
+};
+
+export const unmuteVideoVolume = (videoRef) => {
+  if (videoRef.current) {
+    videoRef.current.muted = false;
+  }
+};

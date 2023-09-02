@@ -10,6 +10,8 @@ import {
   startAutomaticCapture,
   muteMicrophone,
   unmuteMicrophone,
+  unmuteVideoVolume,
+  muteVideoVolume,
 } from "../utils/cameraActions";
 import Tabs from "./Tabs";
 import createTabsConfig from "../utils/tabsConfig";
@@ -19,6 +21,7 @@ import CameraControls from "./CameraControls";
 function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [isMicrophoneOn, setIsMicrophoneOn] = useState(true);
+  const [isUnmute, setIsUnmute] = useState(true);
   const [capturedImages, setCapturedImages] = useState([]);
   const [captureInterval] = useState(null);
   const videoRef = useRef(null);
@@ -59,6 +62,16 @@ function Camera() {
     }
   };
 
+  const toggleVideoVolume = () => {
+    if (isUnmute) {
+      muteVideoVolume(videoRef);
+      setIsUnmute(false);
+    } else {
+      unmuteVideoVolume(videoRef);
+      setIsUnmute(true);
+    }
+  };
+
   useEffect(() => {
     const storedCameraState = localStorage.getItem("cameraState");
 
@@ -93,13 +106,15 @@ function Camera() {
   return (
     <div className={styles.camera}>
       <div className={styles.videoWrapper}>
-        <video ref={videoRef} autoPlay muted />
+        <video ref={videoRef} autoPlay />
         <CameraControls
           isCameraOn={isCameraOn}
           isMicrophoneOn={isMicrophoneOn}
+          isUnmute={isUnmute}
           toggleCamera={toggleCamera}
           captureUtility={captureUtility}
           toggleMicrophone={toggleMicrophone}
+          toggleVideoVolume={toggleVideoVolume}
         />
       </div>
       <div className={styles.tabs}>
