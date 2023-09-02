@@ -1,11 +1,21 @@
 .toggleButton {
-  background: rgba(170, 170, 170, 0.062);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: none;
-  padding: 10px 15px;
+  padding: 10px;
   border-radius: 5px;
   transition: 0.2s;
   cursor: pointer;
   position: relative;
+}
+
+.toggleButtonActive {
+  background: rgba(170, 170, 170, 0.062);
+}
+
+.toggleButtonInactive {
+  background: #ea4335;
 }
 
 .toggleButton:hover {
@@ -20,6 +30,6 @@
 }
 
 .toggleButton img {
-  width: 24px;
-  height: 24px;
+  width: 15px;
+  height: 15px;
 }
