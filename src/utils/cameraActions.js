@@ -46,3 +46,23 @@ export const handleDeleteImage = (index, capturedImages, setCapturedImages) => {
   newCapturedImages.splice(index, 1);
   setCapturedImages(newCapturedImages);
 };
+
+export const muteMicrophone = (videoRef) => {
+  const stream = videoRef.current.srcObject;
+  if (stream) {
+    const audioTracks = stream.getAudioTracks();
+    audioTracks.forEach((track) => {
+      track.enabled = false;
+    });
+  }
+};
+
+export const unmuteMicrophone = (videoRef) => {
+  const stream = videoRef.current.srcObject;
+  if (stream) {
+    const audioTracks = stream.getAudioTracks();
+    audioTracks.forEach((track) => {
+      track.enabled = true;
+    });
+  }
+};

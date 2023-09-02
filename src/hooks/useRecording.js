@@ -7,7 +7,7 @@ export function useRecording(isCameraOn, videoRef) {
   const [videoList, setVideoList] = useState([]);
   // eslint-disable-next-line no-unused-vars
   const [recordingStartTime, setRecordingStartTime] = useState(null);
-  const RECORDING_TIME = 600000;
+  const RECORDING_TIME = 5000;
 
   const startRecording = useCallback(() => {
     if (!videoRef.current) {
@@ -62,7 +62,7 @@ export function useRecording(isCameraOn, videoRef) {
           newMediaRecorder.stop();
           setIsRecording(false);
           startRecording();
-        }, RECORDING_TIME);
+        }, 50000);
       } catch (e) {
         console.error("Failed to start recording", e);
       }

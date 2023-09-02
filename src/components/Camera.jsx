@@ -7,6 +7,9 @@ import {
   stopCameraStream,
   handleCapture,
   handleDeleteImage,
+  startAutomaticCapture,
+  muteMicrophone,
+  unmuteMicrophone,
 } from "../utils/cameraActions";
 import Tabs from "./Tabs";
 import createTabsConfig from "../utils/tabsConfig";
@@ -15,6 +18,7 @@ import CameraControls from "./CameraControls";
 
 function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);
+  const [isMicrophoneOn, setIsMicrophoneOn] = useState(true);
   const [capturedImages, setCapturedImages] = useState([]);
   const [captureInterval] = useState(null);
   const videoRef = useRef(null);
@@ -36,14 +40,24 @@ function Camera() {
     } else {
       startCameraStream(videoRef)
         .then(() => {
-          /* startAutomaticCapture(captureInterval, captureUtility); */
+          startAutomaticCapture(captureInterval, captureUtility);
           startRecording();
           setIsCameraOn(true);
           localStorage.setItem("cameraState", "on");
         })
         .catch((error) => console.log("Error: ", error));
     }
-  }, [captureInterval, isCameraOn, startRecording]);
+  }, [captureInterval, captureUtility, isCameraOn, startRecording]);
+
+  const toggleMicrophone = () => {
+    if (isMicrophoneOn) {
+      muteMicrophone(videoRef);
+      setIsMicrophoneOn(false);
+    } else {
+      unmuteMicrophone(videoRef);
+      setIsMicrophoneOn(true);
+    }
+  };
 
   useEffect(() => {
     const storedCameraState = localStorage.getItem("cameraState");
@@ -55,7 +69,7 @@ function Camera() {
     } else {
       startCameraStream(videoRef)
         .then(() => {
-          /* startAutomaticCapture(captureInterval, captureUtility); */
+          startAutomaticCapture(captureInterval, captureUtility);
           startRecording();
         })
         .catch((error) => {
@@ -82,8 +96,10 @@ function Camera() {
         <video ref={videoRef} autoPlay muted />
         <CameraControls
           isCameraOn={isCameraOn}
+          isMicrophoneOn={isMicrophoneOn}
           toggleCamera={toggleCamera}
           captureUtility={captureUtility}
+          toggleMicrophone={toggleMicrophone}
         />
       </div>
       <div className={styles.tabs}>
