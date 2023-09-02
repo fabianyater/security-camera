@@ -16,18 +16,17 @@
   width: 100%;
 }
 
-.captureList img {
+.capturedImage {
   width: 100%;
   height: auto;
   border: 1px solid #5c5c5c;
 }
 
 .captureList button {
+  background-color: transparent;
   position: absolute;
   bottom: 5px;
   right: 5px;
-  background-color: red;
-  color: white;
   border: none;
   padding: 2px 6px;
   cursor: pointer;
@@ -37,4 +36,9 @@
   margin-top: 1rem;
   text-align: center;
   color: #888;
+}
+
+.deleteIcon {
+  width: 14px;
+  height: 14px;
 }

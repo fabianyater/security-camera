@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Tab from "./Tab";
-import styles from './Tabs.module.css';
+import styles from "./Tabs.module.css";
 
 function Tabs({ tabs }) {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
@@ -10,7 +10,7 @@ function Tabs({ tabs }) {
   };
 
   return (
-    <div>
+    <>
       <div className={styles.tab_buttons}>
         {tabs.map((tab) => (
           <Tab
@@ -24,7 +24,7 @@ function Tabs({ tabs }) {
       <div className={styles.tab_content}>
         {tabs.find((tab) => tab.id === activeTab).content}
       </div>
-    </div>
+    </>
   );
 }
 

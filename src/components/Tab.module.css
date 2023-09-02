@@ -1,22 +1,38 @@
-/* Tab.module.css */
-
 .tab {
-  width: 150px; /* Ancho fijo para las pestañas */
+  width: 150px;
+  min-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background-color: transparent;
-  border: none;
+  border-radius: 12px; 
+  border: 2px solid transparent;
   padding: 10px 20px;
   cursor: pointer;
   font-size: 18px;
   color: #555;
-  transition: background-color 0.3s, color 0.3s;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: #dadada;
+  }
 }
 
 .active_tab {
+  width: 150px;
+  min-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   background-color: #f0f0f0;
-  border: none;
+  border-radius: 12px; 
+  border: 2px solid #0084ffaf;
   padding: 10px 20px;
   cursor: pointer;
   font-size: 18px;
   color: #333;
-  transition: background-color 0.3s, color 0.3s;
+  transition: all 0.3s ease;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

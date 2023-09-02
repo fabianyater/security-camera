@@ -23,7 +23,7 @@ function CameraControls({
       <div className={styles.controlsWrapper}>
         <Button
           onClick={toggleCamera}
-          title={isCameraOn ? "Apagar Cámara" : "Encender Cámara"}
+          title={isCameraOn ? "Turn off the camera" : "Turn on the camera"}
           isActive={isCameraOn}
         >
           {isCameraOn ? (
@@ -34,7 +34,7 @@ function CameraControls({
         </Button>
         <Button
           onClick={toggleMicrophone}
-          title={isMicrophoneOn ? "Apagar Micrófono" : "Encender Micrófono"}
+          title={isMicrophoneOn ? "Turn off the microphone" : "Turn on the microphone"}
           isActive={isMicrophoneOn}
         >
           {isMicrophoneOn ? (
@@ -45,16 +45,16 @@ function CameraControls({
         </Button>
         <Button
           onClick={toggleVideoVolume}
-          title={isUnmute ? "Silenciar" : "Activar sonido"}
+          title={isUnmute ? "Mute" : "Enable sound"}
           isActive={isUnmute}
         >
           {isUnmute ? (
-            <img src={unmute} alt="Turn on the volume" />
+            <img src={unmute} alt="Enable sound" />
           ) : (
-            <img src={mute} alt="Turn off the volume" />
+            <img src={mute} alt="Mute" />
           )}
         </Button>
-        <Button onClick={captureUtility} title="Tomar Captura">
+        <Button onClick={captureUtility} title="Capture snapshot">
           <img
             src={captureImage}
             alt="Capture snapshot from the stream video"

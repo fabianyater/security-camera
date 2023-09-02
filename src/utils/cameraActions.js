@@ -42,9 +42,13 @@ export const handleCapture = (captureImage, setCapturedImages) => {
 };
 
 export const handleDeleteImage = (index, capturedImages, setCapturedImages) => {
-  const newCapturedImages = [...capturedImages];
-  newCapturedImages.splice(index, 1);
-  setCapturedImages(newCapturedImages);
+  const isConfirmed = window.confirm("¿Seguro que quieres continuar?");
+
+  if (isConfirmed) {
+    const newCapturedImages = [...capturedImages];
+    newCapturedImages.splice(index, 1);
+    setCapturedImages(newCapturedImages);
+  }
 };
 
 export const muteMicrophone = (videoRef) => {
