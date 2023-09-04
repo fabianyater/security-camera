@@ -15,7 +15,10 @@ function CaptureList({
     <div className={styles.captureContainer}>
       <h2 className={styles.title}>{title}</h2>
       {id === "automaticCaptures" && (
-        <Toggle isAutomatic={isAutoCaptureOn} onToggle={toggleAutoCapture} />
+        <div className={styles.autoCapture}>
+          <p>Activar capturas automáticas</p>
+          <Toggle isAutomatic={isAutoCaptureOn} onToggle={toggleAutoCapture} />
+        </div>
       )}
       <ul className={styles.captureGrid}>
         {capturedImages &&
