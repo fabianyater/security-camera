@@ -7,11 +7,11 @@ import {
   stopCameraStream,
   handleCapture,
   handleDeleteImage,
-  startAutomaticCapture,
   muteMicrophone,
   unmuteMicrophone,
   unmuteVideoVolume,
   muteVideoVolume,
+  startAutomaticCapture,
 } from "../utils/cameraActions";
 import Tabs from "./Tabs";
 import createTabsConfig from "../utils/tabsConfig";
@@ -22,35 +22,48 @@ function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);
   const [isMicrophoneOn, setIsMicrophoneOn] = useState(true);
   const [isUnmute, setIsUnmute] = useState(true);
-  const [capturedImages, setCapturedImages] = useState([]);
-  const [captureInterval] = useState(null);
+  const [isAutoCaptureOn, setIsAutoCaptureOn] = useState(() => {
+    const storedState = localStorage.getItem("autoCaptureState");
+    return storedState === "true";
+  });
+  const [capturedAtuomaticImages, setcapturedAtuomaticImages] = useState([]);
+  const [capturedImages, setcapturedImages] = useState([]);
+  const [captureInterval, setCaptureInterval] = useState(null);
   const videoRef = useRef(null);
   const { startRecording, videoList } = useRecording(isCameraOn, videoRef);
   const { captureImage } = useCaptureImage(videoRef);
   const deleteImage = (index) =>
-    handleDeleteImage(index, capturedImages, setCapturedImages);
+    handleDeleteImage(
+      index,
+      capturedAtuomaticImages,
+      setcapturedAtuomaticImages
+    );
+
   const captureUtility = useCallback(
-    () => handleCapture(captureImage, setCapturedImages),
+    () => handleCapture(captureImage, setcapturedAtuomaticImages),
+    [captureImage]
+  );
+
+  const captureSnapshot = useCallback(
+    () => handleCapture(captureImage, setcapturedImages),
     [captureImage]
   );
 
   const toggleCamera = useCallback(() => {
     if (isCameraOn) {
       stopCameraStream(videoRef);
-      stopAutomaticCapture(captureInterval);
       setIsCameraOn(false);
       localStorage.setItem("cameraState", "off");
     } else {
       startCameraStream(videoRef)
         .then(() => {
-          startAutomaticCapture(captureInterval, captureUtility);
           startRecording();
           setIsCameraOn(true);
           localStorage.setItem("cameraState", "on");
         })
         .catch((error) => console.log("Error: ", error));
     }
-  }, [captureInterval, captureUtility, isCameraOn, startRecording]);
+  }, [isCameraOn, startRecording]);
 
   const toggleMicrophone = () => {
     if (isMicrophoneOn) {
@@ -72,17 +85,40 @@ function Camera() {
     }
   };
 
+  const toggleAutoCapture = () => {
+    if (isAutoCaptureOn) {
+      stopAutomaticCapture(captureInterval);
+      setCaptureInterval(null);
+      setIsAutoCaptureOn(false);
+      localStorage.setItem("autoCaptureState", "false");
+    } else {
+      const newInterval = startAutomaticCapture(null, captureUtility);
+      setCaptureInterval(newInterval);
+      setIsAutoCaptureOn(true);
+      localStorage.setItem("autoCaptureState", "true");
+    }
+  };
+
   useEffect(() => {
     const storedCameraState = localStorage.getItem("cameraState");
+    const storedAutoCaptureState = localStorage.getItem("autoCaptureState");
 
     if (storedCameraState === "off") {
       stopCameraStream(videoRef);
-      stopAutomaticCapture();
+      stopAutomaticCapture(captureInterval);
       setIsCameraOn(false);
     } else {
       startCameraStream(videoRef)
         .then(() => {
-          startAutomaticCapture(captureInterval, captureUtility);
+          if (storedAutoCaptureState === "true") {
+            const newInterval = startAutomaticCapture(null, captureUtility);
+            setCaptureInterval(newInterval);
+            setIsAutoCaptureOn(true);
+          } else {
+            stopAutomaticCapture(captureInterval);
+            setCaptureInterval(null);
+            setIsAutoCaptureOn(false);
+          }
           startRecording();
         })
         .catch((error) => {
@@ -99,8 +135,11 @@ function Camera() {
 
   const tabs = createTabsConfig({
     capturedImages,
+    capturedAtuomaticImages,
     capturedVideos: videoList,
     handleDeleteImage: deleteImage,
+    isAutoCaptureOn: isAutoCaptureOn,
+    toggleAutoCapture: toggleAutoCapture,
   });
 
   return (
@@ -112,7 +151,7 @@ function Camera() {
           isMicrophoneOn={isMicrophoneOn}
           isUnmute={isUnmute}
           toggleCamera={toggleCamera}
-          captureUtility={captureUtility}
+          captureUtility={captureSnapshot}
           toggleMicrophone={toggleMicrophone}
           toggleVideoVolume={toggleVideoVolume}
         />

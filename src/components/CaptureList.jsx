@@ -1,24 +1,50 @@
 import React from "react";
 import styles from "./CaptureList.module.css"; // Importa tus estilos aquí
 import deleteImage from "../images/delete.svg";
+import Toggle from "./Toggle";
 
-function CaptureList({ title, capturedImages, onDeleteImage }) {
+function CaptureList({
+  title,
+  capturedImages,
+  onDeleteImage,
+  isAutoCaptureOn,
+  toggleAutoCapture,
+  id,
+}) {
   return (
-    capturedImages && (
-      <div className={styles.captureContainer}>
-        <h2 className={styles.title}>{title}</h2>
-        <ul className={styles.captureGrid}>
-          {capturedImages.map((image, index) => (
-            <li className={styles.captureList} key={index}>
-              <img className={styles.capturedImage} src={image.src} alt={`Captured ${index}`} />
-              <button title="Delete image" onClick={() => onDeleteImage(index)}>
-                <img className={styles.deleteIcon} src={deleteImage} alt="Delete snapshot" />
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
+    <div className={styles.captureContainer}>
+      <h2 className={styles.title}>{title}</h2>
+      {id === "automaticCaptures" && (
+        <Toggle isAutomatic={isAutoCaptureOn} onToggle={toggleAutoCapture} />
+      )}
+      <ul className={styles.captureGrid}>
+        {capturedImages &&
+          capturedImages.map((image, index) => {
+            if (image.src === "data:,") {
+              return null; // No renderizar nada si el src es "data:,"
+            }
+            return (
+              <li className={styles.captureList} key={index}>
+                <img
+                  className={styles.capturedImage}
+                  src={image.src}
+                  alt={`Captured ${index}`}
+                />
+                <button
+                  title="Delete image"
+                  onClick={() => onDeleteImage(index)}
+                >
+                  <img
+                    className={styles.deleteIcon}
+                    src={deleteImage}
+                    alt="Delete snapshot"
+                  />
+                </button>
+              </li>
+            );
+          })}
+      </ul>
+    </div>
   );
 }
 
