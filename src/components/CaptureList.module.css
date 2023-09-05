@@ -6,6 +6,24 @@
   list-style: none;
 }
 
+@media (max-width: 1000px) {
+  .captureGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .captureGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .captureGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 .captureList {
   position: relative;
   width: 100%;
