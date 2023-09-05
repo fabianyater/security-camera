@@ -2,7 +2,7 @@ import React from "react";
 import Capture from "../components/Capture";
 import VideoList from "../components/VideoList";
 
-const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVideos, handleDeleteImage, handleDeleteAutoCapturedImage, isAutoCaptureOn, toggleAutoCapture }) => [
+const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVideos, handleDeleteImage, handleDeleteAutoCapturedImage, isAutoCaptureOn, toggleAutoCapture, customInterval, onChangeInterval }) => [
   {
     id: "captures",
     label: "Captures",
@@ -24,6 +24,8 @@ const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVid
         onDeleteImage={handleDeleteAutoCapturedImage}
         isAutoCaptureOn={isAutoCaptureOn}
         toggleAutoCapture={toggleAutoCapture}
+        customInterval={customInterval}
+        onChangeInterval={onChangeInterval}
         id="automaticCaptures"
       />
     ),

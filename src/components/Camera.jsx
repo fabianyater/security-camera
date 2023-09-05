@@ -29,6 +29,7 @@ function Camera() {
   const [capturedAtuomaticImages, setcapturedAtuomaticImages] = useState([]);
   const [capturedImages, setcapturedImages] = useState([]);
   const [captureInterval, setCaptureInterval] = useState(null);
+  const [customInterval, setCustomInterval] = useState(5000);
   const videoRef = useRef(null);
   const { startRecording, videoList } = useRecording(isCameraOn, videoRef);
   const { captureImage } = useCaptureImage(videoRef);
@@ -88,6 +89,17 @@ function Camera() {
     }
   };
 
+  const changeCaptureInterval = (newInterval) => {
+    stopAutomaticCapture(captureInterval); 
+    const newCaptureInterval = startAutomaticCapture(
+      null,
+      captureUtility,
+      newInterval
+    );
+    setCaptureInterval(newCaptureInterval);
+    setCustomInterval(newInterval);
+  };
+
   const toggleAutoCapture = () => {
     if (isAutoCaptureOn) {
       stopAutomaticCapture(captureInterval);
@@ -95,7 +107,11 @@ function Camera() {
       setIsAutoCaptureOn(false);
       localStorage.setItem("autoCaptureState", "false");
     } else {
-      const newInterval = startAutomaticCapture(null, captureUtility);
+      const newInterval = startAutomaticCapture(
+        null,
+        captureUtility,
+        customInterval
+      );
       setCaptureInterval(newInterval);
       setIsAutoCaptureOn(true);
       localStorage.setItem("autoCaptureState", "true");
@@ -114,7 +130,11 @@ function Camera() {
       startCameraStream(videoRef)
         .then(() => {
           if (storedAutoCaptureState === "true") {
-            const newInterval = startAutomaticCapture(null, captureUtility);
+            const newInterval = startAutomaticCapture(
+              null,
+              captureUtility,
+              customInterval
+            );
             setCaptureInterval(newInterval);
             setIsAutoCaptureOn(true);
           } else {
@@ -133,7 +153,6 @@ function Camera() {
     return () => {
       stopAutomaticCapture();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const tabs = createTabsConfig({
@@ -144,6 +163,8 @@ function Camera() {
     handleDeleteImage: deleteImage,
     isAutoCaptureOn: isAutoCaptureOn,
     toggleAutoCapture: toggleAutoCapture,
+    customInterval,
+    onChangeInterval: changeCaptureInterval,
   });
 
   return (

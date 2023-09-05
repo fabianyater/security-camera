@@ -1,0 +1,29 @@
+.customInput {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.input {
+  font-size: 16px;
+  width: 50px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.button {
+  font-size: 14px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}

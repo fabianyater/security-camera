@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Capture.module.css";
-import AutomaticCaptureToggle from "./AutomaticCaptureToggle";
 import CaptureList from "./CaptureList";
+import CaptureOptions from "./CaptureOptions";
 
 function Capture({
   title,
@@ -9,15 +9,19 @@ function Capture({
   onDeleteImage,
   isAutoCaptureOn,
   toggleAutoCapture,
+  customInterval,
+  onChangeInterval,
   id,
 }) {
   return (
     <div className={styles.captureContainer}>
       <h2 className={styles.title}>{title}</h2>
-      <AutomaticCaptureToggle
-        id={id}
+      <CaptureOptions
+        customInterval={customInterval}
         isAutoCaptureOn={isAutoCaptureOn}
+        onChangeInterval={onChangeInterval}
         toggleAutoCapture={toggleAutoCapture}
+        id={id}
       />
       <CaptureList
         capturedImages={capturedImages}
