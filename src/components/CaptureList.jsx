@@ -1,39 +1,32 @@
 import React from "react";
 import styles from "./CaptureList.module.css"; // Importa tus estilos aquí
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 import deleteImage from "../images/delete.svg";
+import { Modal } from "./Modal";
 
-function CaptureList({
-  capturedImages,
-  onDeleteImage,
-}) {
+function CaptureList({ capturedImages, onDeleteImage }) {
   return (
-      <ul className={styles.captureGrid}>
-        {capturedImages &&
-          capturedImages.map((image, index) => {
-            if (image.src === "data:,") {
-              return null;
-            }
-            return (
-              <li className={styles.captureList} key={index}>
+    <ul className={styles.captureGrid}>
+      {capturedImages &&
+        capturedImages.map((image, index) => {
+          if (image.src === "data:,") {
+            return null;
+          }
+          return (
+            <li className={styles.captureList} key={index}>
+              <Modal alt={`Captured ${index}`} src={image.src} />
+              <button title="Delete image" onClick={() => onDeleteImage(index)}>
                 <img
-                  className={styles.capturedImage}
-                  src={image.src}
-                  alt={`Captured ${index}`}
+                  className={styles.deleteIcon}
+                  src={deleteImage}
+                  alt="Delete snapshot"
                 />
-                <button
-                  title="Delete image"
-                  onClick={() => onDeleteImage(index)}
-                >
-                  <img
-                    className={styles.deleteIcon}
-                    src={deleteImage}
-                    alt="Delete snapshot"
-                  />
-                </button>
-              </li>
-            );
-          })}
-      </ul>
+              </button>
+            </li>
+          );
+        })}
+    </ul>
   );
 }
 
