@@ -32,12 +32,15 @@ function Camera() {
   const videoRef = useRef(null);
   const { startRecording, videoList } = useRecording(isCameraOn, videoRef);
   const { captureImage } = useCaptureImage(videoRef);
-  const deleteImage = (index) =>
+  const deleteAutomaticCapturedImage = (index) =>
     handleDeleteImage(
       index,
       capturedAtuomaticImages,
       setcapturedAtuomaticImages
     );
+
+  const deleteImage = (index) =>
+    handleDeleteImage(index, capturedImages, setcapturedImages);
 
   const captureUtility = useCallback(
     () => handleCapture(captureImage, setcapturedAtuomaticImages),
@@ -137,6 +140,7 @@ function Camera() {
     capturedImages,
     capturedAtuomaticImages,
     capturedVideos: videoList,
+    handleDeleteAutoCapturedImage: deleteAutomaticCapturedImage,
     handleDeleteImage: deleteImage,
     isAutoCaptureOn: isAutoCaptureOn,
     toggleAutoCapture: toggleAutoCapture,

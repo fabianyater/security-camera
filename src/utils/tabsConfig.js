@@ -1,13 +1,13 @@
 import React from "react";
-import CaptureList from "../components/CaptureList";
+import Capture from "../components/Capture";
 import VideoList from "../components/VideoList";
 
-const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVideos, handleDeleteImage, isAutoCaptureOn, toggleAutoCapture }) => [
+const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVideos, handleDeleteImage, handleDeleteAutoCapturedImage, isAutoCaptureOn, toggleAutoCapture }) => [
   {
     id: "captures",
     label: "Captures",
     content: (
-      <CaptureList
+      <Capture
         title="Captures"
         capturedImages={capturedImages}
         onDeleteImage={handleDeleteImage}
@@ -18,13 +18,13 @@ const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVid
     id: "automaticCaptures",
     label: "Automatic Captures",
     content: (
-      <CaptureList
+      <Capture
         title="Automatic Captures"
         capturedImages={capturedAtuomaticImages}
-        onDeleteImage={handleDeleteImage}
+        onDeleteImage={handleDeleteAutoCapturedImage}
         isAutoCaptureOn={isAutoCaptureOn}
         toggleAutoCapture={toggleAutoCapture}
-        id={"automaticCaptures"}
+        id="automaticCaptures"
       />
     ),
   },
