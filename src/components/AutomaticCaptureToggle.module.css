@@ -1,0 +1,11 @@
+.autoCapture {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+}
+
+.autoCapture p {
+  margin: 0;
+  font-size: 1rem;
+}
