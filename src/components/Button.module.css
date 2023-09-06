@@ -34,3 +34,14 @@
 .toggleButton p {
   margin: 0;
 }
+
+p {
+  display: inline; /* o 'block' según tus necesidades */
+}
+
+/* Media query para pantallas menores de 768px */
+@media (max-width: 467px) {
+  p {
+    display: none;
+  }
+}
