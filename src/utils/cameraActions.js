@@ -4,7 +4,7 @@ export const getAvailableCameras = async (setCameras, setSelectedCamera) => {
     const videoDevices = devices.filter((device) => device.kind === 'videoinput');
     setCameras(videoDevices);
     if (videoDevices.length > 0) {
-      setSelectedCamera(videoDevices[0].deviceId);
+      setSelectedCamera(videoDevices[1].deviceId);
     }
   } catch (error) {
     console.error("Error fetching devices: ", error);
