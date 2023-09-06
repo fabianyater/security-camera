@@ -1,4 +1,4 @@
-# Camera Component for React
+# Webcam using React
 
 ## Description
 
