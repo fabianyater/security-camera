@@ -1,6 +1,5 @@
 import React from "react";
-import styles from "./CaptureList.module.css"; // Importa tus estilos aquí
-import Zoom from 'react-medium-image-zoom';
+import styles from "./CaptureList.module.css";
 import 'react-medium-image-zoom/dist/styles.css';
 import deleteImage from "../images/delete.svg";
 import { Modal } from "./Modal";
