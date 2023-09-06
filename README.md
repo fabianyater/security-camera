@@ -11,6 +11,7 @@ This is a basoc camera "component" built in React that includes features such as
 - Zoom in and out 
 - Video recording
 - Switching between available cameras
+- Download of images
 
 The app utilizes several custom hooks (`"useCaptureImage"`, `useRecording`) and utility functions (`cameraActions`) to achieve its functionality. 
 
@@ -67,3 +68,8 @@ npm start
 #### Video Recording
 
 ![Recorded Videos](image-5.png)
+
+
+#### Download Images
+
+![Download Images](image-6.png)
