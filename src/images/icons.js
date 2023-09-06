@@ -5,6 +5,7 @@ import microphoneOn from "./microphone-on.svg";
 import microphoneOff from "./microphone-off.svg";
 import unmute from "./unmute.svg";
 import mute from "./mute.svg";
+import settings from "./settings.svg"
 
 export {
   captureImage,
@@ -13,5 +14,6 @@ export {
   microphoneOn,
   microphoneOff,
   unmute,
-  mute
+  mute,
+  settings
 }
