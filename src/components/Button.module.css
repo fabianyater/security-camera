@@ -13,7 +13,7 @@
 }
 
 .toggleButtonActive {
-  background: rgba(170, 170, 170, 0.062);
+  background: #aaaaaa10;
 }
 
 .toggleButtonInactive {
@@ -21,7 +21,7 @@
 }
 
 .toggleButton:active {
-  background: rgba(204, 203, 203, 0.5);
+  background: #cccbcb80;
   top: 2px;
   left: 2px;
 }

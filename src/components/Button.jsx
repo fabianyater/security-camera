@@ -8,8 +8,12 @@ function Button({
   isActive,
   children,
   backgroundColor,
+  activeBackgroundColor,
+  inactiveBackgroundColor,
 }) {
-  const buttonStyle = backgroundColor && { background: backgroundColor };
+  const buttonStyle = isActive
+    ? { background: activeBackgroundColor || backgroundColor }
+    : { background: inactiveBackgroundColor || backgroundColor };
 
   return (
     <button

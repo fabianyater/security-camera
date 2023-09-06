@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Tab from "./Tab";
 import styles from "./Tabs.module.css";
+import Button from "./Button";
 
 function Tabs({ tabs }) {
   const [activeTab, setActiveTab] = useState(tabs[0].id);
@@ -13,12 +13,18 @@ function Tabs({ tabs }) {
     <>
       <div className={styles.tab_buttons}>
         {tabs.map((tab) => (
-          <Tab
+          <Button
             key={tab.id}
             label={tab.label}
             isActive={activeTab === tab.id}
             onClick={() => handleTabClick(tab.id)}
-          />
+            title={tab.label}
+            backgroundColor={tab.background}
+            activeBackgroundColor={tab.activeBackgroundColor}
+            inactiveBackgroundColor={tab.inactiveBackgroundColor}
+          >
+            <img src={tab.src} alt={tab.alt} />
+          </Button>
         ))}
       </div>
       <div className={styles.tab_content}>

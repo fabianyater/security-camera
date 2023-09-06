@@ -6,6 +6,9 @@ import microphoneOff from "./microphone-off.svg";
 import unmute from "./unmute.svg";
 import mute from "./mute.svg";
 import settings from "./settings.svg"
+import images from "./images.svg"
+import autoImages from "./auto-images.svg"
+import videos from "./videos.svg"
 
 export {
   captureImage,
@@ -15,5 +18,8 @@ export {
   microphoneOff,
   unmute,
   mute,
-  settings
+  settings,
+  images,
+  autoImages,
+  videos
 }

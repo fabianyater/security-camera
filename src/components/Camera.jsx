@@ -13,12 +13,12 @@ import {
   muteVideoVolume,
   startAutomaticCapture,
   getAvailableCameras,
-  downloadAllImages,
 } from "../utils/cameraActions";
 import Tabs from "./Tabs";
 import createTabsConfig from "../utils/tabsConfig";
 import { useRecording } from "../hooks/useRecording";
 import CameraControls from "./CameraControls";
+import createCameraControlsConfig from "../utils/cameraControlsConfig";
 
 function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -184,20 +184,22 @@ function Camera() {
     onChangeInterval: changeCaptureInterval,
   });
 
+  const cameraControls = createCameraControlsConfig({
+    isCameraOn,
+    isMicrophoneOn,
+    isUnmute,
+    captureUtility: captureSnapshot,
+    toggleCamera,
+    toggleMicrophone,
+    toggleVideoVolume,
+  });
+
   return (
     <main className={styles.camera}>
       <section className={styles.videoWrapper}>
         <video ref={videoRef} autoPlay />
         {isCameraOn && <div className={styles.recordingLabel}></div>}
-        <CameraControls
-          isCameraOn={isCameraOn}
-          isMicrophoneOn={isMicrophoneOn}
-          isUnmute={isUnmute}
-          toggleCamera={toggleCamera}
-          captureUtility={captureSnapshot}
-          toggleMicrophone={toggleMicrophone}
-          toggleVideoVolume={toggleVideoVolume}
-        />
+        <CameraControls controls={cameraControls}/>
       </section>
       <section>
         <select

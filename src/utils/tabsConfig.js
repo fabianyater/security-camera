@@ -1,6 +1,9 @@
-import React from "react";
 import Capture from "../components/Capture";
 import VideoList from "../components/VideoList";
+import { autoImages, images, videos } from "../images/icons";
+
+const INACTIVE_BACKGROUND_COLOR = "#cccbcb80";
+const ACTIVE_BACKGROUND_COLOR = "#007BFF";
 
 const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVideos, handleDeleteImage, handleDeleteAutoCapturedImage, isAutoCaptureOn, toggleAutoCapture, customInterval, onChangeInterval }) => [
   {
@@ -8,11 +11,15 @@ const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVid
     label: "Captures",
     content: (
       <Capture
-        title="Captures"
+        title="Manual Captures"
         capturedImages={capturedImages}
         onDeleteImage={handleDeleteImage}
       />
     ),
+    src: images,
+    alt: "List of manual captures",
+    activeBackgroundColor: ACTIVE_BACKGROUND_COLOR,
+    inactiveBackgroundColor: INACTIVE_BACKGROUND_COLOR
   },
   {
     id: "automaticCaptures",
@@ -29,6 +36,10 @@ const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVid
         id="automaticCaptures"
       />
     ),
+    src: autoImages,
+    alt: "List of all auto captures",
+    activeBackgroundColor: ACTIVE_BACKGROUND_COLOR,
+    inactiveBackgroundColor: INACTIVE_BACKGROUND_COLOR
   },
   {
     id: "videos",
@@ -39,6 +50,10 @@ const createTabsConfig = ({ capturedImages, capturedAtuomaticImages, capturedVid
         capturedVideos={capturedVideos}
       />
     ),
+    src: videos,
+    alt: "List of recorded videos",
+    activeBackgroundColor: ACTIVE_BACKGROUND_COLOR,
+    inactiveBackgroundColor: INACTIVE_BACKGROUND_COLOR
   },
 ];
 

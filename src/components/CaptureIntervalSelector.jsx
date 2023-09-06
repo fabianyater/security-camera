@@ -5,7 +5,7 @@ import styles from "./CaptureIntervalSelector.module.css";
 import IntervalSelect from "./IntervalSelect";
 import CustomIntervalInput from "./CustomIntervalInput";
 
-function CaptureIntervalSelector({ customInterval, onChangeInterval, id }) {
+function CaptureIntervalSelector({ customInterval, onChangeInterval }) {
   const [isCustom, setIsCustom] = useState(false);
   const [tempCustomInterval, setTempCustomInterval] = useState(
     customInterval ? customInterval / 1000 : 0
@@ -27,24 +27,20 @@ function CaptureIntervalSelector({ customInterval, onChangeInterval, id }) {
   };
 
   return (
-    id === "automaticCaptures" && (
-      <div className={styles.container}>
-        <label className={styles.label}>
-          Intervalo de captura en segundos:{" "}
-        </label>
-        <IntervalSelect
-          onChange={handleSelectChange}
-          value={isCustom ? "custom" : customInterval}
+    <div className={styles.container}>
+      <label className={styles.label}>Intervalo de captura en segundos: </label>
+      <IntervalSelect
+        onChange={handleSelectChange}
+        value={isCustom ? "custom" : customInterval}
+      />
+      {isCustom && (
+        <CustomIntervalInput
+          onApply={handleApplyCustomInterval}
+          onChange={(e) => setTempCustomInterval(Number(e.target.value))}
+          value={tempCustomInterval}
         />
-        {isCustom && (
-          <CustomIntervalInput
-            onApply={handleApplyCustomInterval}
-            onChange={(e) => setTempCustomInterval(Number(e.target.value))}
-            value={tempCustomInterval}
-          />
-        )}
-      </div>
-    )
+      )}
+    </div>
   );
 }
 

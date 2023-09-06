@@ -2,15 +2,12 @@ import React from "react";
 import Toggle from "./Toggle";
 import styles from "./AutomaticCaptureToggle.module.css";
 
-function AutomaticCapture({ isAutoCaptureOn, toggleAutoCapture, id }) {
+function AutomaticCapture({ isAutoCaptureOn, toggleAutoCapture }) {
   return (
-    id ===
-    "automaticCaptures"  && (
-      <div className={styles.autoCapture}>
-        <p>{isAutoCaptureOn ? "Desactivar" : "Activar"} capturas automáticas</p>
-        <Toggle isAutomatic={isAutoCaptureOn} onToggle={toggleAutoCapture} />
-      </div>
-    )
+    <div className={styles.autoCapture}>
+      <p>{isAutoCaptureOn ? "Desactivar" : "Activar"} capturas automáticas</p>
+      <Toggle isAutomatic={isAutoCaptureOn} onToggle={toggleAutoCapture} />
+    </div>
   );
 }
 

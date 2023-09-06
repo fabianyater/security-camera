@@ -14,10 +14,11 @@ function CaptureOptions({
   capturedImages,
   id,
 }) {
-  return (
+  const ID = "automaticCaptures";
+
+  return id === ID && (
     <div className={styles.captureOptions}>
       <AutomaticCaptureToggle
-        id={id}
         isAutoCaptureOn={isAutoCaptureOn}
         toggleAutoCapture={toggleAutoCapture}
       />
@@ -25,7 +26,6 @@ function CaptureOptions({
         <CaptureIntervalSelector
           customInterval={customInterval}
           onChangeInterval={onChangeInterval}
-          id={id}
           isAutoCaptureOn
         />
       )}
