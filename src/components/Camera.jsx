@@ -12,6 +12,7 @@ import {
   unmuteVideoVolume,
   muteVideoVolume,
   startAutomaticCapture,
+  getAvailableCameras,
 } from "../utils/cameraActions";
 import Tabs from "./Tabs";
 import createTabsConfig from "../utils/tabsConfig";
@@ -30,6 +31,8 @@ function Camera() {
   const [capturedImages, setcapturedImages] = useState([]);
   const [captureInterval, setCaptureInterval] = useState(null);
   const [customInterval, setCustomInterval] = useState(5000);
+  const [cameras, setCameras] = useState([]);
+  const [selectedCamera, setSelectedCamera] = useState(null);
   const videoRef = useRef(null);
   const { startRecording, videoList } = useRecording(isCameraOn, videoRef);
   const { captureImage } = useCaptureImage(videoRef);
@@ -90,7 +93,7 @@ function Camera() {
   };
 
   const changeCaptureInterval = (newInterval) => {
-    stopAutomaticCapture(captureInterval); 
+    stopAutomaticCapture(captureInterval);
     const newCaptureInterval = startAutomaticCapture(
       null,
       captureUtility,
@@ -116,6 +119,17 @@ function Camera() {
       setIsAutoCaptureOn(true);
       localStorage.setItem("autoCaptureState", "true");
     }
+  };
+
+  const changeCamera = async (deviceId) => {
+    stopCameraStream(videoRef);
+    startCameraStream(videoRef, deviceId)
+      .then(() => {
+        setSelectedCamera(deviceId);
+      })
+      .catch((error) => {
+        console.error("Error: ", error);
+      });
   };
 
   useEffect(() => {
@@ -150,6 +164,8 @@ function Camera() {
       setIsCameraOn(true);
     }
 
+    getAvailableCameras(setCameras, setSelectedCamera);
+
     return () => {
       stopAutomaticCapture();
     };
@@ -168,8 +184,8 @@ function Camera() {
   });
 
   return (
-    <div className={styles.camera}>
-      <div className={styles.videoWrapper}>
+    <main className={styles.camera}>
+      <section className={styles.videoWrapper}>
         <video ref={videoRef} autoPlay />
         <CameraControls
           isCameraOn={isCameraOn}
@@ -180,11 +196,24 @@ function Camera() {
           toggleMicrophone={toggleMicrophone}
           toggleVideoVolume={toggleVideoVolume}
         />
-      </div>
-      <div className={styles.tabs}>
+      </section>
+      <section>
+        <select
+          onChange={(e) => changeCamera(e.target.value)}
+          value={selectedCamera}
+          className={styles.customSelect}
+        >
+          {cameras.map((camera, index) => (
+            <option key={index} value={camera.deviceId}>
+              {camera.label}
+            </option>
+          ))}
+        </select>
+      </section>
+      <section className={styles.tabs}>
         <Tabs tabs={tabs} />
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
 
