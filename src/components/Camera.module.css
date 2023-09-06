@@ -61,3 +61,27 @@
   outline: none;
   border-color: #007bff;
 }
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.2;
+  }
+}
+
+.recordingLabel {
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border-radius: 50%;
+  animation: blink 1.5s infinite;
+  box-shadow: 0 0 10px #ff0000, 0 0 30px #ff0000, 0 0 40px #ff0000, 0 0 50px #ff0000;
+}

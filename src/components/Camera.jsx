@@ -187,6 +187,7 @@ function Camera() {
     <main className={styles.camera}>
       <section className={styles.videoWrapper}>
         <video ref={videoRef} autoPlay />
+        {isCameraOn && <div className={styles.recordingLabel}></div>}
         <CameraControls
           isCameraOn={isCameraOn}
           isMicrophoneOn={isMicrophoneOn}
