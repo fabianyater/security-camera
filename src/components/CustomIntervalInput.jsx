@@ -8,7 +8,7 @@ const CustomIntervalInput = ({ value, onChange, onApply }) => (
       type="number"
       value={value}
       onChange={onChange}
-      min={0}
+      min={1}
     />
     <button className={styles.button} onClick={onApply}>
       Apply
