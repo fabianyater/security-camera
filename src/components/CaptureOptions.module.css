@@ -5,3 +5,25 @@
   flex-direction: column;
   gap: 20px;
 }
+
+.downloadButton {
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  /* Añade un pequeño efecto "hover" */
+  &:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+  }
+
+  /* Añade un efecto "active" cuando se haga clic en el botón */
+  &:active {
+    background-color: #004085;
+  }
+}

@@ -21,6 +21,7 @@ function Capture({
         isAutoCaptureOn={isAutoCaptureOn}
         onChangeInterval={onChangeInterval}
         toggleAutoCapture={toggleAutoCapture}
+        capturedImages={capturedImages}
         id={id}
       />
       <CaptureList

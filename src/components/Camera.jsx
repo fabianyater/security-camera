@@ -13,6 +13,7 @@ import {
   muteVideoVolume,
   startAutomaticCapture,
   getAvailableCameras,
+  downloadAllImages,
 } from "../utils/cameraActions";
 import Tabs from "./Tabs";
 import createTabsConfig from "../utils/tabsConfig";
