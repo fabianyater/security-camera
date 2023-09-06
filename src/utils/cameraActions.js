@@ -2,10 +2,9 @@ export const getAvailableCameras = async (setCameras, setSelectedCamera) => {
   try {
     const devices = await navigator.mediaDevices.enumerateDevices();
     const videoDevices = devices.filter((device) => device.kind === 'videoinput');
+
     setCameras(videoDevices);
-    if (videoDevices.length > 0) {
-      setSelectedCamera(videoDevices[1].deviceId);
-    }
+    setSelectedCamera(videoDevices[1]?.deviceId || null);
   } catch (error) {
     console.error("Error fetching devices: ", error);
   }
@@ -13,10 +12,13 @@ export const getAvailableCameras = async (setCameras, setSelectedCamera) => {
 
 export const startCameraStream = async (videoRef, deviceId) => {
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: { deviceId: deviceId ? { exact: deviceId } : undefined },
+    const constraints = {
+      video: {
+        ...(deviceId && { deviceId: { exact: deviceId } }),
+      },
       audio: true,
-    });
+    }
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
     videoRef.current.srcObject = stream;
     videoRef.current.play();
