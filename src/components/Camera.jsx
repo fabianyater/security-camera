@@ -13,6 +13,7 @@ import {
   muteVideoVolume,
   startAutomaticCapture,
   getAvailableCameras,
+  downloadAllImages,
 } from "../utils/cameraActions";
 import Tabs from "./Tabs";
 import createTabsConfig from "../utils/tabsConfig";
@@ -198,6 +199,14 @@ function Camera() {
           toggleVideoVolume={toggleVideoVolume}
         />
       </section>
+      <button
+        onClick={() => {
+          console.log("object");
+          downloadAllImages(capturedImages);
+        }}
+      >
+        Descargar todas las imágenes
+      </button>
       <section>
         <select
           onChange={(e) => changeCamera(e.target.value)}

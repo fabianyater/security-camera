@@ -1,3 +1,5 @@
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
 export const getAvailableCameras = async (setCameras, setSelectedCamera) => {
   try {
     const devices = await navigator.mediaDevices.enumerateDevices();
@@ -96,4 +98,28 @@ export const unmuteVideoVolume = (videoRef) => {
   if (videoRef.current) {
     videoRef.current.muted = false;
   }
+};
+
+export const downloadAllImages = (images) => {
+  if (images.length === 0) {
+    alert("No hay imágenes para descargar.");
+    return;
+  }
+  
+  const zip = new JSZip();
+
+  images.forEach((image, index) => {
+    const timestamp = new Date(image.timestamp);
+    const formattedDate = timestamp
+      .toLocaleString()
+      .replace(/[/,: ]+/g, "_");
+    const imgData = image.src.split(",")[1];
+    const fileName = `${formattedDate}.png`;
+
+    zip.file(fileName, imgData, { base64: true });
+  });
+
+  zip.generateAsync({ type: "blob" }).then((content) => {
+    saveAs(content, "images.zip");
+  });
 };
