@@ -1,9 +1,19 @@
 import React from "react";
 import styles from "./Button.module.css";
 
-function Button({ onClick, label, title, isActive, children }) {
+function Button({
+  onClick,
+  label,
+  title,
+  isActive,
+  children,
+  backgroundColor,
+}) {
+  const buttonStyle = backgroundColor && { background: backgroundColor };
+
   return (
     <button
+      style={buttonStyle}
       className={`${styles.toggleButton} ${
         isActive === false
           ? styles.toggleButtonInactive
@@ -13,7 +23,7 @@ function Button({ onClick, label, title, isActive, children }) {
       title={title}
     >
       {children}
-      {label}
+      {label && <p>{label}</p>}
     </button>
   );
 }
