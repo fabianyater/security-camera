@@ -62,7 +62,7 @@ export function useRecording(isCameraOn, videoRef) {
           newMediaRecorder.stop();
           setIsRecording(false);
           startRecording();
-        }, 50000);
+        }, 480000);
       } catch (e) {
         console.error("Failed to start recording", e);
       }
