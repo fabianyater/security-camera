@@ -1,5 +1,6 @@
-import React from 'react';
-import styles from './CustomIntervalInput.module.css';
+import React from "react";
+import styles from "./CustomIntervalInput.module.css";
+import Button from "./Button";
 
 const CustomIntervalInput = ({ value, onChange, onApply }) => (
   <div className={styles.customInput}>
@@ -10,9 +11,12 @@ const CustomIntervalInput = ({ value, onChange, onApply }) => (
       onChange={onChange}
       min={1}
     />
-    <button className={styles.button} onClick={onApply}>
-      Apply
-    </button>
+    <Button
+      onClick={onApply}
+      title="Apply new value"
+      label="Apply"
+      backgroundColor="#007BFF"
+    />
   </div>
 );
 

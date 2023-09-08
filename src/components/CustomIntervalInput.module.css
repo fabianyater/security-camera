@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   margin-left: 10px;
+  gap: 10px;
 }
 
 .input {
@@ -11,19 +12,4 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   outline: none;
-}
-
-.button {
-  font-size: 14px;
-  color: white;
-  background-color: #007bff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.button:hover {
-  background-color: #0056b3;
 }
