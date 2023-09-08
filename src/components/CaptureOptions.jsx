@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./CaptureOptions.module.css";
 import AutomaticCaptureToggle from "./AutomaticCaptureToggle";
 import CaptureIntervalSelector from "./CaptureIntervalSelector";
-import { downloadAllImages } from "../utils/cameraActions";
+import { downloadAllFiles } from "../utils/cameraActions";
 import Button from "./Button";
 import download from "../images/download.svg";
 
@@ -16,13 +16,15 @@ function CaptureOptions({
 }) {
   const ID = "automaticCaptures";
 
-  return id === ID && (
+  return (
     <div className={styles.captureOptions}>
-      <AutomaticCaptureToggle
-        isAutoCaptureOn={isAutoCaptureOn}
-        toggleAutoCapture={toggleAutoCapture}
-      />
-      {isAutoCaptureOn && (
+      {id === ID && (
+        <AutomaticCaptureToggle
+          isAutoCaptureOn={isAutoCaptureOn}
+          toggleAutoCapture={toggleAutoCapture}
+        />
+      )}
+      {isAutoCaptureOn && id === ID && (
         <CaptureIntervalSelector
           customInterval={customInterval}
           onChangeInterval={onChangeInterval}
@@ -33,7 +35,7 @@ function CaptureOptions({
         <Button
           title="Descargar todas las imágenes"
           label="Descargar todas las imágenes"
-          onClick={() => downloadAllImages(capturedImages)}
+          onClick={() => downloadAllFiles(capturedImages, "images")}
           backgroundColor="#007BFF"
         >
           <img src={download} alt="Download all snapshots" />

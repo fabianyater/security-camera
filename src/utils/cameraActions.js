@@ -1,5 +1,6 @@
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
+import { formattedDate } from "./formatDate";
 export const getAvailableCameras = async (setCameras, setSelectedCamera) => {
   try {
     const devices = await navigator.mediaDevices.enumerateDevices();
@@ -100,26 +101,38 @@ export const unmuteVideoVolume = (videoRef) => {
   }
 };
 
-export const downloadAllImages = (images) => {
-  if (images.length === 0) {
-    alert("No hay imágenes para descargar.");
+export const downloadAllFiles = async (files, fileType) => {
+  if (files.length === 0) {
     return;
   }
-  
+
   const zip = new JSZip();
 
-  images.forEach((image, index) => {
-    const timestamp = new Date(image.timestamp);
-    const formattedDate = timestamp
-      .toLocaleString()
-      .replace(/[/,: ]+/g, "_");
-    const imgData = image.src.split(",")[1];
-    const fileName = `${formattedDate}.png`;
+  if (fileType === "images") {
+    files.forEach((image, index) => {
+      const imgData = image.src.split(",")[1];
+      const fileName = `${formattedDate(image.timestamp)}.png`;
 
-    zip.file(fileName, imgData, { base64: true });
-  });
+      zip.file(fileName, imgData, { base64: true });
+    });
 
-  zip.generateAsync({ type: "blob" }).then((content) => {
-    saveAs(content, "images.zip");
-  });
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      saveAs(content, "images.zip");
+    });
+  } else if (fileType === "videos") {
+    await Promise.all(files.map(async (video, index) => {
+      const response = await fetch(video.videoUrl);
+      const videoBlob = await response.blob();
+
+      const fileName = `${formattedDate(video.videoStartTime)}.mp4`;
+
+      zip.file(fileName, videoBlob);
+    }));
+
+    zip.generateAsync({ type: "blob" }).then((content) => {
+      saveAs(content, "videos.zip");
+    });
+  } else {
+    throw new Error("File typet not supported.");
+  }
 };
