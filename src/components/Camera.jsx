@@ -6,7 +6,6 @@ import {
   stopAutomaticCapture,
   stopCameraStream,
   handleCapture,
-  handleDeleteImage,
   muteMicrophone,
   unmuteMicrophone,
   unmuteVideoVolume,
@@ -19,6 +18,7 @@ import createTabsConfig from "../utils/tabsConfig";
 import { useRecording } from "../hooks/useRecording";
 import CameraControls from "./CameraControls";
 import createCameraControlsConfig from "../utils/cameraControlsConfig";
+import { handleDeleteImage } from "../utils/filesActions";
 
 function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);

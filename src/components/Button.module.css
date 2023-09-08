@@ -26,6 +26,11 @@
   left: 2px;
 }
 
+.toggleButton:disabled {
+  background-color: #7c7c7c80 !important;
+  color: gray;
+}
+
 .toggleButton img {
   width: 15px;
   height: 15px;

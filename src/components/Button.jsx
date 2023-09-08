@@ -10,6 +10,7 @@ function Button({
   backgroundColor,
   activeBackgroundColor,
   inactiveBackgroundColor,
+  disabled,
 }) {
   const buttonStyle = isActive
     ? { background: activeBackgroundColor || backgroundColor }
@@ -17,6 +18,7 @@ function Button({
 
   return (
     <button
+      disabled={disabled}
       style={buttonStyle}
       className={`${styles.toggleButton} ${
         isActive === false
