@@ -37,9 +37,6 @@
 
 .captureList button {
   background-color: transparent;
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
   border: none;
   padding: 2px 6px;
   cursor: pointer;
@@ -54,4 +51,14 @@
 .deleteIcon {
   width: 14px;
   height: 14px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  right: 5px;
+  border: none;
 }
