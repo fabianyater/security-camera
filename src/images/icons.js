@@ -9,6 +9,8 @@ import settings from "./settings.svg"
 import images from "./images.svg"
 import autoImages from "./auto-images.svg"
 import videos from "./videos.svg"
+import favorite from "./favorite.svg"
+import favoriteSelected from "./favorite-selected.svg"
 
 export {
   captureImage,
@@ -21,5 +23,7 @@ export {
   settings,
   images,
   autoImages,
-  videos
+  videos,
+  favorite,
+  favoriteSelected
 }

@@ -6,10 +6,13 @@ import Button from "./Button";
 import styles from "./CaptureList.module.css";
 import ImageOptions from "./ImageOptions";
 import { Modal } from "./Modal";
+import { favorite, favoriteSelected } from "../images/icons";
+import { useFavorites } from "../context/FavoriteContext";
 
 function CaptureList({ capturedImages, onDeleteImage }) {
   const [selectedImages, setSelectedImages] = useState([]);
   const [checkboxes, setCheckboxes] = useState([]);
+  const { favorites, toggleFavorite } = useFavorites();
 
   if (!Array.isArray(capturedImages) || capturedImages.length === 0) {
     return;
@@ -78,13 +81,23 @@ function CaptureList({ capturedImages, onDeleteImage }) {
           <ul className={styles.captureGrid}>
             {groupedImages[monthYear].map((image, index) => (
               <li className={styles.captureList} key={index}>
-                <div className={`${styles.image_container} ${checkboxes[index] && styles.selected}`}>
+                <div
+                  className={`${styles.image_container} ${
+                    checkboxes[index] && styles.selected
+                  }`}
+                >
                   <Modal alt={`Captured ${index}`} src={image.src} />
                   <input
                     className={styles.select_image}
                     type="checkbox"
                     onChange={() => handleCheckboxChange(index, image)}
                     checked={checkboxes[index] || false}
+                  />
+                  <img
+                    src={favorites.includes(image) ? favoriteSelected : favorite}
+                    alt="Favorite"
+                    className={`${styles.favorite} ${favorites.includes(image.src) && styles.favoriteActive}`}
+                    onClick={() => toggleFavorite(image)}
                   />
                 </div>
                 <ImageOptions

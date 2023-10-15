@@ -53,7 +53,7 @@
   height: 14px;
 }
 
-.imageContainer {
+.image_container {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -68,6 +68,20 @@
   height: 15px;
   width: 15px;
 }
+
+.favorite {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 5px;
+  height: 20px;
+  width: 20px;
+}
+
+.favoriteActive {
+  color: #ff0000; /* Cambia el color a tu preferencia */
+}
+
 
 .selected {
   transform: scale(0.95); 

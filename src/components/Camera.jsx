@@ -19,6 +19,7 @@ import { useRecording } from "../hooks/useRecording";
 import CameraControls from "./CameraControls";
 import createCameraControlsConfig from "../utils/cameraControlsConfig";
 import { handleDeleteImage } from "../utils/filesActions";
+import { useFavorites } from "../context/FavoriteContext";
 
 function Camera() {
   const [isCameraOn, setIsCameraOn] = useState(true);
@@ -28,6 +29,7 @@ function Camera() {
     const storedState = localStorage.getItem("autoCaptureState");
     return storedState === "true";
   });
+  const { favorites } = useFavorites();
   const [capturedAtuomaticImages, setcapturedAtuomaticImages] = useState([]);
   const [capturedImages, setcapturedImages] = useState([]);
   const [captureInterval, setCaptureInterval] = useState(null);
@@ -174,6 +176,7 @@ function Camera() {
 
   const tabs = createTabsConfig({
     capturedImages,
+    favorites,
     capturedAtuomaticImages,
     capturedVideos: videoList,
     handleDeleteAutoCapturedImage: deleteAutomaticCapturedImage,
