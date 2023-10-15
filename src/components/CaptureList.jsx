@@ -12,21 +12,14 @@ function CaptureList({ capturedImages, onDeleteImage }) {
     return;
   }
 
-  function parseDMY(str) {
-    const [day, month, yearTime] = str.split("/");
-    const [year, time] = yearTime.split(",");
-    const [hour, minute, second] = time.trim().split(":");
-    return new Date(year, month - 1, day, hour, minute, second);
-  }
-
   const sortedImages = [...capturedImages].sort((a, b) => {
-    return parseDMY(a.timestamp) - parseDMY(b.timestamp);
+    return a.timestamp - b.timestamp;
   });
 
   const groupedImages = {};
 
   sortedImages.forEach((image) => {
-    const date = parseDMY(image.timestamp);
+    const date = new Date(image.timestamp);
     const monthYear = date.toLocaleString("es-ES", {
       month: "long",
       year: "numeric",
