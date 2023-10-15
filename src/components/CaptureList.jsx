@@ -8,6 +8,7 @@ import ImageOptions from "./ImageOptions";
 import { Modal } from "./Modal";
 import { favorite, favoriteSelected } from "../images/icons";
 import { useFavorites } from "../context/FavoriteContext";
+import { Toaster } from "react-hot-toast";
 
 function CaptureList({ capturedImages, onDeleteImage }) {
   const [selectedImages, setSelectedImages] = useState([]);
@@ -99,6 +100,7 @@ function CaptureList({ capturedImages, onDeleteImage }) {
                     className={`${styles.favorite} ${favorites.includes(image.src) && styles.favoriteActive}`}
                     onClick={() => toggleFavorite(image)}
                   />
+                  <Toaster position="top-center" />
                 </div>
                 <ImageOptions
                   index={index}

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react";
+import toast from "react-hot-toast";
 
 const FavoritesContext = createContext();
 
@@ -14,8 +15,10 @@ export function FavoritesProvider({ children }) {
       setFavorites((prevFavorites) =>
         prevFavorites.filter((src) => src !== imageSrc)
       );
+      toast.success("Image removed from favorites", { icon: '💔' });
     } else {
       setFavorites((prevFavorites) => [...prevFavorites, imageSrc]);
+      toast.success("Image added to favorites", { icon: '❤️' });
     }
   };
 
