@@ -1,16 +1,43 @@
-import React from "react";
-import styles from "./CaptureList.module.css";
+import React, { useState } from "react";
 import "react-medium-image-zoom/dist/styles.css";
-import deleteImage from "../images/delete.svg";
-import { Modal } from "./Modal";
-import Button from "./Button";
-import { downloadImage } from "../utils/filesActions";
 import download from "../images/download.svg";
+import { downloadAllFiles } from "../utils/filesActions";
+import Button from "./Button";
+import styles from "./CaptureList.module.css";
+import ImageOptions from "./ImageOptions";
+import { Modal } from "./Modal";
 
 function CaptureList({ capturedImages, onDeleteImage }) {
+  const [selectedImages, setSelectedImages] = useState([]);
+  const [checkboxes, setCheckboxes] = useState([]);
+
   if (!Array.isArray(capturedImages) || capturedImages.length === 0) {
     return;
   }
+
+  const handleImageSelect = (imageSrc) => {
+    if (selectedImages.includes(imageSrc)) {
+      setSelectedImages((prevImages) =>
+        prevImages.filter((src) => src !== imageSrc)
+      );
+    } else {
+      setSelectedImages((prevImages) => [...prevImages, imageSrc]);
+    }
+  };
+
+  const handleCheckboxChange = (index, imageSrc) => {
+    const newCheckboxes = [...checkboxes];
+    newCheckboxes[index] = !newCheckboxes[index];
+    setCheckboxes(newCheckboxes);
+
+    handleImageSelect(imageSrc);
+  };
+
+  const downloadImages = () => {
+    downloadAllFiles(selectedImages, "images");
+    setSelectedImages([]);
+    setCheckboxes([]);
+  };
 
   const sortedImages = [...capturedImages].sort((a, b) => {
     return a.timestamp - b.timestamp;
@@ -34,27 +61,37 @@ function CaptureList({ capturedImages, onDeleteImage }) {
 
   return (
     <>
+      {selectedImages.length > 0 && (
+        <Button
+          title="Descargar seleccionadas"
+          label={`Descargar seleccionadas (${selectedImages.length})`}
+          margin
+          backgroundColor="#007BFF"
+          onClick={() => downloadImages()}
+        >
+          <img src={download} alt="Download all snapshots" />
+        </Button>
+      )}
       {Object.keys(groupedImages).map((monthYear, index) => (
         <div key={index}>
           <h2>{monthYear}</h2>
           <ul className={styles.captureGrid}>
             {groupedImages[monthYear].map((image, index) => (
               <li className={styles.captureList} key={index}>
-                <Modal alt={`Captured ${index}`} src={image.src} />
-                <div className={styles.actions}>
-                  <Button
-                    title="Eliminar imagem"
-                    onClick={() => onDeleteImage(index)}
-                  >
-                    <img src={deleteImage} alt="Delete capture" />
-                  </Button>
-                  <Button
-                    title="Descargar imagem"
-                    onClick={() => downloadImage(image)}
-                  >
-                    <img src={download} alt="Download all snapshots" />
-                  </Button>
+                <div className={`${styles.image_container} ${checkboxes[index] && styles.selected}`}>
+                  <Modal alt={`Captured ${index}`} src={image.src} />
+                  <input
+                    className={styles.select_image}
+                    type="checkbox"
+                    onChange={() => handleCheckboxChange(index, image)}
+                    checked={checkboxes[index] || false}
+                  />
                 </div>
+                <ImageOptions
+                  index={index}
+                  image={image}
+                  onDeleteImage={onDeleteImage}
+                />
               </li>
             ))}
           </ul>
