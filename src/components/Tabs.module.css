@@ -1,4 +1,9 @@
 /* Tabs.module.css */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .tab_buttons {
   display: flex;
@@ -7,4 +12,8 @@
   gap: 20px;
   flex-wrap: wrap;
   margin-bottom: 20px;
+}
+
+.tab_item {
+  list-style: none;
 }
