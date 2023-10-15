@@ -11,6 +11,7 @@ function Button({
   activeBackgroundColor,
   inactiveBackgroundColor,
   disabled,
+  margin
 }) {
   const buttonStyle = isActive
     ? { background: activeBackgroundColor || backgroundColor }
@@ -24,7 +25,7 @@ function Button({
         isActive === false
           ? styles.toggleButtonInactive
           : styles.toggleButtonActive
-      }`}
+      } ${margin && styles.margin} `}
       onClick={onClick}
       title={title}
     >
