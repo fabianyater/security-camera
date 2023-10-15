@@ -41,6 +41,11 @@ export const formatDate2 = datetime => {
 }
 
 export const formattedDate = timestamp => {
+  if (isNaN(timestamp) || timestamp == null) {
+    console.error("Invalid timestamp:", timestamp);
+    return "InvalidDate";
+  }
+
   const date = new Date(timestamp);
 
   const day = String(date.getDate()).padStart(2, '0');
