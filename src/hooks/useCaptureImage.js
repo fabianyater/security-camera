@@ -1,3 +1,5 @@
+import { formatDate } from "../utils/formatDate";
+
 // useCaptureImage.js
 export const useCaptureImage = (videoRef) => {
   const captureImage = () => {
@@ -10,7 +12,6 @@ export const useCaptureImage = (videoRef) => {
       context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
 
       const currentVideoStartTime = new Date().getTime();
-
       const formattedTimestamp = new Date(currentVideoStartTime).toLocaleString();
 
       context.font = '16px Arial';
@@ -20,7 +21,7 @@ export const useCaptureImage = (videoRef) => {
       const imgData = canvas.toDataURL('image/png');
       const newImage = {
         src: imgData,
-        timestamp: formattedTimestamp
+        timestamp: currentVideoStartTime
       };
 
       return newImage; // Devuelve la imagen capturada y su información
