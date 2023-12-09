@@ -11,7 +11,7 @@ function Button({
   activeBackgroundColor,
   inactiveBackgroundColor,
   disabled,
-  margin
+  margin,
 }) {
   const buttonStyle = isActive
     ? { background: activeBackgroundColor || backgroundColor }

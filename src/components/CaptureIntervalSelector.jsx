@@ -10,10 +10,11 @@ function CaptureIntervalSelector({ customInterval, onChangeInterval }) {
   const [tempCustomInterval, setTempCustomInterval] = useState(
     customInterval ? customInterval / 1000 : 0
   );
+  const CUSTOM = "custom";
 
   const handleSelectChange = (e) => {
     const value = e.target.value;
-    if (value === "custom") {
+    if (value === CUSTOM) {
       setIsCustom(true);
     } else {
       setIsCustom(false);
@@ -31,7 +32,7 @@ function CaptureIntervalSelector({ customInterval, onChangeInterval }) {
       <label className={styles.label}>Intervalo de captura en segundos: </label>
       <IntervalSelect
         onChange={handleSelectChange}
-        value={isCustom ? "custom" : customInterval}
+        value={isCustom ? CUSTOM : customInterval}
       />
       {isCustom && (
         <CustomIntervalInput

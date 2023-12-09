@@ -3,9 +3,12 @@ import Toggle from "./Toggle";
 import styles from "./AutomaticCaptureToggle.module.css";
 
 function AutomaticCapture({ isAutoCaptureOn, toggleAutoCapture }) {
+  const UNABLE = "Unable";
+  const ENABLE = "Enable";
+  
   return (
     <div className={styles.autoCapture}>
-      <p>{isAutoCaptureOn ? "Desactivar" : "Activar"} capturas automáticas</p>
+      <p>{isAutoCaptureOn ? UNABLE : ENABLE} automatic captures</p>
       <Toggle isAutomatic={isAutoCaptureOn} onToggle={toggleAutoCapture} />
     </div>
   );
